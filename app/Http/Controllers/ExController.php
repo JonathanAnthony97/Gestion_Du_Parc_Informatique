@@ -149,22 +149,29 @@ class ExController extends Controller
     }
 
 
-
-
+    function conversion($request){
+        $test = $request->has('download');
+        if(!$test){
+            throw new Exception("Exportation impossible");   
+        }else{
+            return $test;
+        }
+    }
    public function pdfview(Request $request){
-         $users = User::get();
 
+        $users = User::get();
         view()->share('users',$users);
-
-        if($request->has('download')){
-
+        try{
+            if(this.conversion($request)){
             $pdf = PDF::loadView('pdfview');
-
             return $pdf->download('pdfview.pdf');
-
+            }
+            return view('pdfview');
+        }
+        catch(Exception $e){
+            return $e.getMessage();
         }
 
-        return view('pdfview');
    }
 
 
