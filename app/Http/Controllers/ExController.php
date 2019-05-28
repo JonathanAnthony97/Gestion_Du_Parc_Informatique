@@ -12,35 +12,45 @@ use App\User;
 class ExController extends Controller 
 {   
   
-    //premier chargement et parametrage du constante
-    public function index($const = 0){
-
-        
-         if( is_null(Session::get('Par_page')))
-            Session::put('Par_page',5);
-    	//return view('exemple');
-        if($const != 0){
-            $this->set_Constante($const);
-        }
-        $cos=$this->get_Constante();
-         
-    	$total=User::count();
-        $user=User::paginate($cos);
+    private function factorisation($total,$cos){
         $a=1;
         if($total > 0){
-        	if($total >= $cos){
-        		$b=$cos; 
-        	}else{
-        		$b=$total;
-        	}
-        }else{
-            $a=0;
-            $b=$a;
-        }
+                if($total >= $cos){ $b=$cos; }
+                    else{ $b=$total; }
+                }else{ $a=0; $b=$a; } $tab[] = $a; $tab[] = $b;
+        return $tab;
+    }
+
+    public function index($const = 0){
+        if( is_null(Session::get('Par_page')))
+            Session::put('Par_page',5);
+        if($const != 0){ $this->set_Constante($const); }
+        $cos=$this->get_Constante();
+    	$total=User::count();
+        $user=User::paginate($cos);
+        
+        $n = $this->factorisation($total,$cos);
+                $a =$n[0];$b=$n[1];
+
         if($const != 0){
-        return view('test',compact('user','a','b','total'))->render();
+            return view('test',compact('user','a','b','total'))->render();
+            }
+            return view('static',compact('user','a','b','total'));
+    }
+
+    public function recherche(Request $request){
+        $search=$request->search;
+        $cos=$this->get_Constante();
+        if($search == null){ 
+            $total=User::count(); $user=User::paginate($cos);
+        }else{
+            $u=User::where('username','like',"%{$search}%")->orWhere('email','like',"%{$search}%")
+                ->orWhere('created_at','like',"%{$search}%");   
+            $total=$u->count(); $user= $u->paginate($cos);
         }
-        return view('static',compact('user','a','b','total'));
+        $n = $this->factorisation($total,$cos);
+                $a =$n[0];$b=$n[1];
+        return view('test',compact('user','a','b','total'))->render();
     }
 
  
@@ -51,34 +61,7 @@ class ExController extends Controller
     }
 
     //recherche et renvoi par ajax
-    public function recherche(Request $request){
-        $search=$request->search;
-        $cos=$this->get_Constante();
-        $a=1;
-        if($search == null){ 
-            $total=User::count();
-            $user=User::paginate($cos);
-        }else{
-            $u=User::where('username','like',"%{$search}%")
-                ->orWhere('email','like',"%{$search}%")
-                ->orWhere('created_at','like',"%{$search}%");
-                
-            $total=$u->count();
-            $user= $u->paginate($cos);
-            
-        }
-        if($total > 0){
-                if($total >= $cos){
-                    $b=$cos; 
-                }else{
-                     $b=$total;
-                }
-            }else{
-                $a=0;
-                $b=$a;
-            }
-        return view('test',compact('user','a','b','total'))->render();
-    }
+
 
     public function nav_search(Request $request){
 
