@@ -142,6 +142,7 @@ class HistoController extends Controller
             return view('Parc.histo',compact('a','b','total','histo'))->render();
     }
 
+    //fonction qui exporte les historiques d'intervention en excel
     public function InterventionExcel(Request $request,$typ){
         $h = Intervention::leftJoin('tiers as t','t.id_tier','=','interventions.id_tier')
             ->leftJoin('materiels as m','m.id_ma','=','interventions.id_ma');
