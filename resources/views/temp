@@ -1,0 +1,371 @@
+<div class="modal fade" id="subMenu" style="overflow-y: scroll;">
+			<div class="modal-dialog" style="width: 92.4%;">
+				<div class="modal-content" style="background-color: #f9f9f9;">
+					<div class="modal-header" style="background-color: #ddd !important;padding-top: 7px;padding-left: 8px;padding-bottom: 6px;border-bottom:1px solid #c8c8c8;border-top:10px solid #3c5a74;">
+							<div class="row">
+								<div class="col-md-4" style="padding-right: 0px;">
+									<input type="hidden" name="temp_serie">
+									<input type="hidden" name="temp_id">
+									<div class="input-group">
+										<span class="input-group-addon">&nbsp;&nbsp;<i class="icon-hdd"> </i><b>&nbsp;&nbsp;Materiel&nbsp;&nbsp;</b></span>
+										<input class="form-control titl" style="background-color: #f9f9f9;" readonly>
+									</div>
+								</div>
+								<div class="col-md-4" style="padding-left: 8px;">
+									<div class="input-group" style="margin-left: 0px;">
+										<input class="form-control rech" id="gl_search" placeholder="Search..."><span class="input-group-addon"><i class="icon-search"> </i></span>
+									</div>	
+								</div>
+								<div class="col-md-4">
+									<button class="btn btn-sm" id="go" type="button">go</button>							
+						
+									<button class="btn btn-sm pull-right" class="close" data-dismiss="modal" aria-hidden="true">Fermer</button>
+												
+								</div>
+							</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3" style="padding-top: 8px;padding-right: 0px;">
+							<div class="panel-group" style="margin-left: 8px;margin-bottom: 8px;" id="accordion">
+									<div class="panel panel-default" style="margin-bottom: 0px;">
+										<div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+											<h3 class="panel-title">
+												<i id="firstCaret" style="float: right;" class="icon-caret-down"></i>
+											Formulaire
+											</h3>
+										</div>
+										<div id="collapseOne" class="panel-collapse in ">
+											<div class="panel-body" style="padding: 8px;">
+												 <!-- Tabs-->
+												<div class="tabbable tabbable-custom customized" style="margin-right: 0px;margin-bottom: 0px;margin-top: -4px;">
+													<ul class="nav nav-tabs hehehe">
+														<li class="active"><a href="#tabe_f2" data-toggle="tab"><b>Maintenance</b></a></li>
+														<li><a href="#tabe_f3" data-toggle="tab"><b>Reparation</b></a></li>
+														<li ><a href="#tabe_f1" data-toggle="tab"><b>Affectation</b></a></li>
+													</ul>
+													<!-- tab affecation -->
+													<div class="tab-content" style="overflow:hidden;background:#f9f9f9;">
+														<div class="tab-pane" id="tabe_f1">
+															<form class="form-vertical" id="Faire_Affectation" method="post" action="{{ route('affectation') }}">
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	{{ csrf_field() }}
+																	<input type="hidden" name="id_mat">
+																	<div class="col-md-11">
+																		<label id="lb" for="deprte" class="control-label pull-left">Departement
+																		</label>
+																		<br>
+																		<select id="deprte" name="departement" class="select2 col-md-12">
+																			<option value="0">Choix departement</option>
+																		</select>
+																		<label class="help-block deprte"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="daf" class="control-label pull-left">Date Affectation
+																		</label>
+																		<br>
+																		<div class="input-group">
+
+																			<input id="daf" name="dateAffectation" class="form-control daty_af" placeholder="dd-mm-yyyy hh:mm"><span class="input-group-addon"><i class="icon-calendar"> </i></span>
+																		</div>
+																		<label class="help-block daf"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="usr" class="control-label pull-left">Utilisateur
+																		</label>
+																		<br>
+																		<select id="usr" name="utilisateur" class="select2 col-md-12">
+																			<option value="0">Selectionner</option>
+																		</select>
+																		<label class="help-block usr"></label>
+																	</div>
+																</div>
+																
+																<button id="reset3" style="margin-left: 16px;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-left" type="reset"><i class="icon-refresh"></i> Reset</button>
+																<button style="margin-right: 8.5%;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-right" type="submit"><i class="icon-check"></i> Sauver</button>
+															</form>
+														</div>
+
+															<!-- tab maintenance -->
+														<div class="tab-pane active" id="tabe_f2">
+															<form id="addMaintenance" method="post" action="{{ route('maintenance') }}" class="form-vertical">
+																{{ csrf_field() }}
+																<input type="hidden" name="id_mat">
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="traitant" class="control-label pull-left">Prestataire
+																		</label>
+																		<br>
+																		<select id="traitant" name="prestataire" class="select2 col-md-12">
+																			<option value="0">Selectionner</option>
+																		</select>
+																		<label class="help-block traitant"></label>
+																	</div>
+																</div>
+																
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="dmain" class="control-label pull-left">Date Maintenance
+																		</label>
+																		<br>
+																		<div class="input-group">
+																			<input id="dmain" name="dateMaintenance" class="form-control daty_main" placeholder="dd-mm-yyyy"><span class="input-group-addon"><i class="icon-calendar"> </i></span>
+																		</div>
+																		<label class="help-block dmain"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="obs" class="control-label pull-left">Observation
+																		</label>
+																		<br>
+																		<textarea id="obs" name="observation" style="overflow-y: hidden;" class="form-control">
+																		</textarea>
+																		<label class="help-block obs"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="cout" class="control-label pull-left">Coût (Ar)
+																		</label>
+																		<br>
+																		<input id="cout" name="cout" class="form-control" placeholder="">
+																		<label class="help-block cout"></label>
+																	</div>
+																</div>
+																<button id="reset1" style="margin-left: 16px;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-left" type="reset"><i class="icon-refresh"></i> Reset</button>
+																<button style="margin-right: 8.5%;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-right" type="submit"><i class="icon-check"></i> Sauver</button>
+															</form>
+														</div>
+
+															<!-- tab reparation -->
+														<div class="tab-pane" id="tabe_f3">
+															<form class="form-vertical">
+																{{ csrf_field() }}
+																<input type="hidden" name="id_mat">
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="prest_rep" class="control-label pull-left">Prestataire
+																		</label>
+																		<br>
+																		<select id="prest_rep" name="prestataire" class="select2 col-md-12">
+																			<option value="0">Selectionner</option>
+																		</select>
+																		<label class="help-block prest_rep"></label>
+																	</div>
+																</div>
+																
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="d_rep" class="control-label pull-left">Date Reparation
+																		</label>
+																		<br>
+																		<div class="input-group">
+																			<input id="d_rep" class="form-control date_rep" placeholder="dd-mm-yyyy"><span class="input-group-addon"><i class="icon-calendar"> </i></span>
+																		</div>
+																		<label class="help-block d_rep"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="obs_rep" class="control-label pull-left">Observation
+																		</label>
+																		<br>
+																		<textarea name="observation" id="obs_rep" style="overflow-y: hidden;" rows="1" class="form-control">
+																		</textarea>
+																		<label class="help-block obs_rep"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="piece" class="control-label pull-left">Pièce
+																		</label>
+																		<br>
+																		<textarea id="piece" name="piece" style="overflow-y: hidden;" rows="1" class="form-control">
+																		</textarea>
+																		<label class="help-block piece"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="cout_rp" class="control-label pull-left">Coût (Ar)
+																		</label>
+																		<br>
+																		<input id="cout_rp" name="cout" class="form-control" placeholder="">
+																		<label class="help-block cout_rp"></label>
+																	</div>
+																</div>
+																<button id="reset2" style="margin-left: 16px;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-left" type="reset"><i class="icon-refresh"></i> Reset</button>
+																<button style="margin-right: 8.5%;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-right" type="submit"><i class="icon-check"></i> Sauver</button>
+															</form>
+														</div>
+													</div>
+												</div>
+										<!--END TABS-->
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+											<h3 class="panel-title">
+											<i style="float: right;" class="icon-caret-down"></i>
+											Panne
+											</h3>
+										</div>
+										<div id="collapseTwo" class="panel-collapse collapse">
+											<div class="panel-body">
+												 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+											</div>
+										</div>
+									</div>
+									<div class="panel panel-default">
+										<div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseFor">
+											<h3 class="panel-title">
+											<i style="float: right;" class="icon-caret-down"></i>
+											Cession
+											</h3>
+										</div>
+										<div id="collapseFor" class="panel-collapse collapse">
+											<div class="panel-body">
+												 <form class="form-vertical">
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="" class="control-label pull-left">Objet de la cession
+																		</label>
+																		<br>
+																		<select id="usr" name="" class="select2 col-md-12">
+																			<option value="0">Selectionner</option>
+																		</select>
+																		<label class="help-block h"></label>
+																	</div>
+																</div>
+																
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="" class="control-label pull-left">Date Cession
+																		</label>
+																		<br>
+																		<div class="input-group">
+																			<input class="form-control daty_af" placeholder="dd-mm-yyyy hh:mm"><span class="input-group-addon"><i class="icon-calendar"> </i></span>
+																		</div>
+																		<label class="help-block h"></label>
+																	</div>
+																</div>
+																<div class="row" style="padding-left:16px;margin-bottom: 8px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="" class="control-label pull-left">Personne 
+																		</label>
+																		<br>
+																		<input class="form-control" placeholder="">
+																		<label class="help-block h"></label>
+																	</div>
+																</div>
+																
+																<div class="row" style="padding-left:16px;">
+																	<div class="col-md-11">
+																		<label id="lb" for="" class="control-label pull-left">Coût (Ar)
+																		</label>
+																		<br>
+																		<input class="form-control" placeholder="">
+																		<label class="help-block h"></label>
+																	</div>
+																</div>
+
+																<button style="margin-right: 8.5%;margin-top: 13px;margin-bottom: 10px;" class="btn btn-sm  pull-right" type="submit"><i class="icon-check"></i> Sauver</button>
+															</form>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+						<div class="col-md-9" style="margin-top: 6px;padding-left: 8px;">
+							<!-- Tabs-->
+										<div class="tabbable tabbable-custom customized" style="margin-right: 8px;margin-bottom: 8px;">
+											<ul class="nav nav-tabs hehe">
+												<li id="tab_l1" class="active"><a href="#tabe_1" data-toggle="tab"><b>Tracabilites</b></a></li>
+												<li id="tab_l2"><a href="#tabe_2" data-toggle="tab"><b>Maintenances</b></a></li>
+												<li id="tab_l3"><a href="#tabe_3" data-toggle="tab"><b>Reparations</b></a></li>
+												<li id="tab_l4"><a href="#tabe_4" data-toggle="tab"><b>Pannes</b></a></li>
+											</ul>
+											<div class="tab-content" style="overflow:hidden;">
+												<div class="tab-pane active" id="tabe_1">
+													<div class="dataTables_wrapper form-inline" role="grid">
+														<div class="dataTables_header clearfix">
+															<div class="row">
+															<div class="col-md-3">
+																<div class="dataTables_length"><label><select id="const8" size="1" aria-controls="DataTables_Table_3" class="select2-offscreen" tabindex="-1"><option id="init" value="9">9</option><option value="14">14</option><option value="22">22</option><option value="50">All</option></select> par page</label></div>
+															</div>
+															<div class="col-md-9">
+																<div class="DTTT btn-group pull-right">
+																	<a href="{{ URL::to('downloadExcel/xlsx') }}" class="btn DTTT_button_xls"><span>Excel</span></a>
+																	<a href="{{ route('pdfview',['download'=>'pdf']) }}" class="btn DTTT_button_pdf"><span>PDF</span></a>
+																</div>
+															</div>
+
+														</div>
+														<div id="ajax_mtrace" style="padding-top: 0px;">
+															<!-- table traca -->
+														</div>
+													</div>
+													</div>
+												</div>
+												<div class="tab-pane" id="tabe_2">
+													<div class="dataTables_wrapper form-inline" role="grid">
+														<div class="dataTables_header clearfix">
+															<div class="row">
+															<div class="col-md-12">
+																<div class="dataTables_length"><label><select id="const9" size="1" aria-controls="DataTables_Table_3" class="select2-offscreen" tabindex="-1"><option id="init" value="9">9</option><option value="14">14</option><option value="22">22</option><option value="50">All</option></select> par page</label></div>
+
+																<div class="DTTT btn-group pull-right">
+																	<a href="{{ URL::to('downloadExcel/xlsx') }}" class="btn DTTT_button_xls"><span>Excel</span></a>
+																	<a href="{{ route('pdfview',['download'=>'pdf']) }}" class="btn DTTT_button_pdf"><span>PDF</span></a>
+																</div>
+															</div>
+
+														</div>
+														<div id="ajax_maint" style="padding-top: 0px;">
+															<!-- table maintenance -->
+														</div>
+													</div>
+														
+													</div>
+												</div>
+												<div class="tab-pane" id="tabe_3">
+													<div class="dataTables_wrapper form-inline" role="grid">
+														<div class="dataTables_header clearfix">
+															<div class="row">
+															<div class="col-md-12">
+																<div class="dataTables_length"><label><select id="const10" size="1" aria-controls="DataTables_Table_3" class="select2-offscreen" tabindex="-1"><option id="init" value="9">9</option><option value="14">14</option><option value="22">22</option><option value="50">All</option></select> par page</label></div>
+
+																<div class="DTTT btn-group pull-right">
+																	<a href="{{ URL::to('downloadExcel/xlsx') }}" class="btn DTTT_button_xls"><span>Excel</span></a>
+																	<a href="{{ route('pdfview',['download'=>'pdf']) }}" class="btn DTTT_button_pdf"><span>PDF</span></a>
+																</div>
+															</div>
+
+														</div>
+														<div id="ajax_rep" style="padding-top: 0px;">
+															<!-- table reparation -->
+														</div>
+													</div>
+														
+													</div>
+												</div>
+												<div class="tab-pane" id="tabe_4">
+													<p>I'm in Section 4.</p>
+												</div>
+											</div>
+										</div>
+										<!--END TABS-->
+						</div>
+					</div>
+					<div style="height: 8px;padding: 0px;background:#ddd" class="modal-footer">
+						
+					</div>
+						
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
